@@ -46,6 +46,8 @@ def forbidden(error) -> str:
 
 @app.before_request
 def authentication():
+    """Authenticates a user before processing a request.
+    """
     if auth:
         excluded_paths = [
             '/api/v1/status/',
