@@ -4,10 +4,13 @@ from flask import request
 import re
 from typing import List, TypeVar
 
+
 class Auth:
     """ manages API authentication """
+
     def __init__(self):
         pass
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """ Check if path requires authorization. """
         if path is not None and excluded_paths is not None:
@@ -28,7 +31,7 @@ class Auth:
         if request is not None:
             return request.headers.get('Authorization', None)
         return None
+
     def current_user(self, request=None) -> TypeVar('User'):
         """ Get current user from request. """
         return None
-    
