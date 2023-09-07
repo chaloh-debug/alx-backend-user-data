@@ -2,6 +2,8 @@
 """Session authentication module.
 """
 from uuid import uuid4
+from flask import request
+from models.user import User
 from .auth import Auth
 
 
@@ -13,7 +15,7 @@ class SessionAuth(Auth):
     def create_session(self, user_id: str = None) -> str:
         """creates a Session ID.
         """
-        if isinstance(user_id, str):
+        if type(user_id) is str:
             if user_id is not None:
                 session_id = str(uuid4())
                 self.user_id_by_session_id[session_id] = user_id
@@ -23,7 +25,7 @@ class SessionAuth(Auth):
     def user_id_for_session_id(self, session_id: str = None) -> str:
         """Returns a User ID based on a Session ID.
         """
-        if isinstance(session_id, str):
+        if type(session_id) is str:
             if session_id is not None:
                 return self.user_id_by_session_id.get(session_id)
         return None
