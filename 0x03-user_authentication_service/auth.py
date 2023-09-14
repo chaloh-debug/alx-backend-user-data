@@ -15,6 +15,7 @@ def _hash_password(password: str) -> bytes:
     """
     return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
 
+
 def _generate_uuid(password: str) -> str:
     """Generate uuid.
     """
@@ -36,7 +37,7 @@ class Auth:
         except NoResultFound:
             return self._db.add_user(email, _hash_password(password))
         raise ValueError("User {} already exists".format(email))
-    
+
     def valid_login(self, email: str, password: str) -> bool:
         """Verify user details.
         """
@@ -49,7 +50,7 @@ class Auth:
         except NoResultFound:
             return False
         return False
-    
+
     def create_session(self, email: str) -> str:
         """Create a session ID.
         """
@@ -74,14 +75,14 @@ class Auth:
         except NoResultFound:
             return None
         return usr
-    
+
     def destroy_session(self, user_id: str) -> None:
         """Destroy a user session.
         """
         if user_id is not None:
             self._db.update_user(user_id, session_id=None)
         return None
-    
+
     def get_reset_password_token(self, email: str) -> str:
         """Generate reset password token.
         """
@@ -95,7 +96,7 @@ class Auth:
         reset_token = _generate_uuid()
         self._db.update_user(usr.id, reset_token=reset_token)
         return reset_token
-        
+
     def update_password(self, reset_token: str, password: str) -> None:
         """Updates password given a reset token.
         """
