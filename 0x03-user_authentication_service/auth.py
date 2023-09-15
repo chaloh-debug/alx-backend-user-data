@@ -63,6 +63,7 @@ class Auth:
             return None
         sess_id = _generate_uuid()
         self._db.update_user(usr.id, session_id=sess_id)
+        return sess_id
 
     def get_user_from_session_id(self, session_id: str) -> Union[User, None]:
         """Retrieve user based on session ID.
